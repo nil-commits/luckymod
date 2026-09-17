@@ -1,0 +1,27 @@
+name: Luckymod
+version: ${version}
+main: com.nilcommits.luckymod.LuckymodPlugin
+api-version: '1.21'
+author: nil-commits
+description: Lucky Blocks with weighted, config-driven random outcomes.
+website: https://github.com/
+
+commands:
+  luckymod:
+    description: Luckymod main command.
+    aliases: [lucky, lb, luckymod]
+    usage: |
+           /<command> help - show help
+           /<command> give [player] [amount] [luck] - give lucky blocks
+           /<command> reload - reload configuration
+
+permissions:
+  luckymod.use:
+    description: Allows using/placing lucky blocks and /luckymod help.
+    default: true
+  luckymod.give:
+    description: Allows /luckymod give.
+    default: op
+  luckymod.reload:
+    description: Allows /luckymod reload.
+    default: op

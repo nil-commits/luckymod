@@ -1,0 +1,236 @@
+# ------------------------------------------------------------------
+#  Luckymod configuration
+# ------------------------------------------------------------------
+#  A "lucky block" is a normal vanilla block (no client mod needed).
+#  Place it, break it, and a weighted random outcome triggers.
+#
+#  Each outcome has: type, category (GOOD|NEUTRAL|BAD), weight, message.
+#  The block's LUCK (-100..100) biases GOOD/BAD odds.
+#
+#  Types: ITEM | MOB | EFFECT | TRAP | STRUCTURE | ACTION | FALLING | APOCALYPSE | SPECIAL
+#  See the reference blocks below for the per-type fields.
+#
+#  This default set mirrors the classic Base Lucky Block mod outcomes.
+#  Notes on fidelity are in comments; a few meta events (wishing well interaction,
+#  giant lucky block) are approximated or left out where no clean vanilla equivalent exists.
+# ------------------------------------------------------------------
+
+prefix: "&6[Lucky] &r"
+
+block:
+  material: SPONGE
+
+effects:
+  sounds: true
+
+recipe:
+  enabled: true
+  shape:
+    - "GGG"
+    - "GXG"
+    - "GGG"
+  ingredients:
+    G: GOLD_INGOT
+    X: DROPPER
+
+upgrades:
+  enabled: true
+  catalysts:
+    DIAMOND: 10
+    EMERALD: 8
+    GOLD_BLOCK: 5
+    IRON_BLOCK: 3
+    ROTTEN_FLESH: -10
+    COAL: -5
+    DEAD_BUSH: -8
+
+# Field reference (all optional unless noted):
+#   ITEM      : items:[...], pool:[...], min:, max:, name:, lore:[...], launch:true,
+#               enchants:{NAME:level}, randomEnchantments:true, enchantCount:, enchantMaxLevel:
+#   MOB       : mob:, min:, max:, name:, size:, charged:true, tamed:true, baby:true,
+#               collar:RED, rabbitType:THE_KILLER_BUNNY, equipment:{helmet,chest,legs,boots,hand,offhand}
+#   EFFECT    : effect:, duration:seconds, amplifier:
+#   TRAP      : trap:EXPLOSION|LIGHTNING|FIRE|ANVIL|TNT|ARROW_RAIN|LAVA|WEB|WATER|CAGE, target:BLOCK|PLAYER, value:
+#   STRUCTURE : structure:CAGE|OBSIDIAN_BOX|GLASS_BOX|PLATFORM|TREE|LOOT_CHEST, target:, material:, value:, items:[...]
+#   ACTION    : action:HEAL|FEED|XP|LAUNCH|TELEPORT|IGNITE|WEATHER_CLEAR|WEATHER_RAIN|THUNDER|TIME_DAY|TIME_NIGHT, value:
+#   FALLING   : fallingMaterial:, topMaterial:, height:, count:, spread:, lightning:true
+#   APOCALYPSE: groups:[{mob:,min:,max:}], difficultyHard:, midnight:, giveWoodenSword:, slowness:, blindness:
+#   SPECIAL   : special:SLIME_CASTLE|HERO_VILLAGER|ARMOR_STAND_BABY|RAINBOW_SHEEP|TNT_AIR_LAUNCH|WITCH_BATS|MOB_STACK|TNT_TOWER|TWO_BLOCKS|BEDROCK_SIGN, preset:, value:
+
+outcomes:
+  # ============================ ITEMS / EQUIPMENT ============================
+  # 001-005 tools
+  - {type: ITEM, category: NEUTRAL, weight: 6, message: "&7A full wooden tool set.", items: ["WOODEN_PICKAXE", "WOODEN_AXE", "WOODEN_SHOVEL", "WOODEN_HOE", "WOODEN_SWORD"]}
+  - {type: ITEM, category: NEUTRAL, weight: 6, message: "&7A full stone tool set.", items: ["STONE_PICKAXE", "STONE_AXE", "STONE_SHOVEL", "STONE_HOE", "STONE_SWORD"]}
+  - {type: ITEM, category: GOOD, weight: 6, message: "&aA full golden tool set.", items: ["GOLDEN_PICKAXE", "GOLDEN_AXE", "GOLDEN_SHOVEL", "GOLDEN_HOE", "GOLDEN_SWORD"]}
+  - {type: ITEM, category: GOOD, weight: 6, message: "&aIron tools!", pool: ["IRON_PICKAXE", "IRON_AXE", "IRON_SHOVEL", "IRON_HOE", "IRON_SWORD"], min: 2, max: 3}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aDiamond tools!", pool: ["DIAMOND_PICKAXE", "DIAMOND_AXE", "DIAMOND_SHOVEL", "DIAMOND_HOE", "DIAMOND_SWORD"], min: 1, max: 2}
+  # 006-011 armor
+  - {type: ITEM, category: NEUTRAL, weight: 6, message: "&7A full leather set.", items: ["LEATHER_HELMET", "LEATHER_CHESTPLATE", "LEATHER_LEGGINGS", "LEATHER_BOOTS"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aGold armor + horse armor.", items: ["GOLDEN_HELMET", "GOLDEN_CHESTPLATE", "GOLDEN_LEGGINGS", "GOLDEN_BOOTS", "GOLDEN_HORSE_ARMOR"]}
+  - {type: ITEM, category: GOOD, weight: 6, message: "&aIron armor pieces.", pool: ["IRON_HELMET", "IRON_CHESTPLATE", "IRON_LEGGINGS", "IRON_BOOTS", "IRON_HORSE_ARMOR"], min: 2, max: 3}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aChainmail armor.", pool: ["CHAINMAIL_HELMET", "CHAINMAIL_CHESTPLATE", "CHAINMAIL_LEGGINGS", "CHAINMAIL_BOOTS"], min: 2, max: 3}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aDiamond armor pieces.", pool: ["DIAMOND_HELMET", "DIAMOND_CHESTPLATE", "DIAMOND_LEGGINGS", "DIAMOND_BOOTS", "DIAMOND_HORSE_ARMOR"], min: 1, max: 2}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aAll the horse armor!", items: ["IRON_HORSE_ARMOR", "GOLDEN_HORSE_ARMOR", "DIAMOND_HORSE_ARMOR"]}
+  # 012-022 misc gear
+  - {type: ITEM, category: GOOD, weight: 7, message: "&aA bow and arrows.", items: ["BOW", "ARROW:24"]}
+  - {type: ITEM, category: NEUTRAL, weight: 5, message: "&7A sponge.", items: ["SPONGE"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&72 ender chests.", items: ["ENDER_CHEST:2"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&78 droppers.", items: ["DROPPER:8"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&78 hay bales.", items: ["HAY_BLOCK:8"]}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&a8 TNT!", items: ["TNT:8"]}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&a14 obsidian.", items: ["OBSIDIAN:14"]}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&aThe Dragon Egg!", items: ["DRAGON_EGG"]}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aAn enchanting table.", items: ["ENCHANTING_TABLE"]}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&aEnd portal frames!", pool: ["END_PORTAL_FRAME"], min: 2, max: 6}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&aA beacon!", items: ["BEACON"]}
+
+  # ============================ LOOT CHESTS ============================
+  - {type: STRUCTURE, category: NEUTRAL, weight: 5, message: "&7A village chest.", structure: LOOT_CHEST, items: ["IRON_INGOT:5", "GOLD_INGOT:3", "DIAMOND:2", "BREAD:3", "APPLE:3", "IRON_SWORD", "IRON_HELMET", "OBSIDIAN:3", "OAK_SAPLING:3"]}
+  - {type: STRUCTURE, category: GOOD, weight: 5, message: "&aA bonus chest.", structure: LOOT_CHEST, items: ["WOODEN_PICKAXE", "WOODEN_AXE", "APPLE:3", "BREAD:3", "OAK_LOG:10", "COAL:8", "OAK_SAPLING:4"]}
+  - {type: STRUCTURE, category: GOOD, weight: 4, message: "&aA dungeon chest.", structure: LOOT_CHEST, items: ["IRON_INGOT:4", "GOLD_INGOT:3", "BREAD:3", "REDSTONE:8", "BONE:6", "SADDLE", "BUCKET", "GOLDEN_APPLE"]}
+  # 026 legacy (kept)
+  - {type: STRUCTURE, category: GOOD, weight: 2, message: "&6A treasure chest!", structure: LOOT_CHEST, items: ["DIAMOND:8", "GOLD_INGOT:16", "EMERALD:8", "GOLDEN_APPLE:4", "NETHERITE_SCRAP:2", "EXPERIENCE_BOTTLE:16"]}
+
+  # ============================ SMALL / JOKE DROPS ============================
+  - {type: ITEM, category: BAD, weight: 6, message: "&cA stick. Great.", items: ["STICK"]}
+  - {type: ITEM, category: BAD, weight: 6, message: "&cRotten flesh. Gross.", items: ["ROTTEN_FLESH"]}
+  - {type: ITEM, category: BAD, weight: 4, message: "&dA Romantic Rose.", items: ["POPPY"], name: "&dRomantic Rose"}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&74 paintings.", items: ["PAINTING:4"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&7A cake.", items: ["CAKE"]}
+  - {type: ITEM, category: GOOD, weight: 6, message: "&aGold ingots!", items: ["GOLD_INGOT:12"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aRabbit stew.", items: ["RABBIT_STEW:6"]}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&aA Nether Star!", items: ["NETHER_STAR"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&7Shelving and books.", items: ["BOOKSHELF:8", "BOOK:12"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&7Pumpkins!", items: ["PUMPKIN:12", "JACK_O_LANTERN:12"]}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aApples of gold!", items: ["GOLDEN_APPLE:3", "ENCHANTED_GOLDEN_APPLE:2"]}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&7Assorted buckets.", items: ["BUCKET", "WATER_BUCKET", "LAVA_BUCKET", "MILK_BUCKET"]}
+
+  # ============================ FOOD ============================
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aPork!", items: ["PORKCHOP:8", "COOKED_PORKCHOP:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aFish!", items: ["COD:8", "COOKED_COD:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aBeef!", items: ["BEEF:8", "COOKED_BEEF:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aChicken!", items: ["CHICKEN:8", "COOKED_CHICKEN:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aMutton!", items: ["MUTTON:8", "COOKED_MUTTON:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aRabbit!", items: ["RABBIT:8", "COOKED_RABBIT:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aCarrots!", items: ["CARROT:12", "GOLDEN_CARROT:8"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aPotatoes!", items: ["POTATO:12", "BAKED_POTATO:8", "POISONOUS_POTATO:2"]}
+  - {type: ITEM, category: GOOD, weight: 5, message: "&aPumpkin pie!", items: ["PUMPKIN_PIE:9"]}
+
+  # ============================ MISC RESOURCES ============================
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aEnder loot!", items: ["ENDER_PEARL:10", "ENDER_EYE:5"]}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aPotions!", pool: ["POTION", "SPLASH_POTION"], min: 4, max: 8}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aSpawn eggs!", pool: ["PIG_SPAWN_EGG", "COW_SPAWN_EGG", "SHEEP_SPAWN_EGG", "CHICKEN_SPAWN_EGG", "WOLF_SPAWN_EGG", "CAT_SPAWN_EGG", "HORSE_SPAWN_EGG", "RABBIT_SPAWN_EGG"], min: 4, max: 8}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&7Some heads.", pool: ["PLAYER_HEAD", "ZOMBIE_HEAD", "SKELETON_SKULL", "CREEPER_HEAD"], min: 1, max: 3}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aMusic!", items: ["JUKEBOX"], pool: ["MUSIC_DISC_CAT", "MUSIC_DISC_13", "MUSIC_DISC_BLOCKS", "MUSIC_DISC_CHIRP", "MUSIC_DISC_FAR", "MUSIC_DISC_MALL", "MUSIC_DISC_STRAD"], min: 1, max: 3}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aBrewing package.", items: ["BREWING_STAND", "NETHER_WART:8", "BLAZE_POWDER:8", "GLASS_BOTTLE:8", "GHAST_TEAR:2", "GLISTERING_MELON_SLICE:4"]}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aRedstone package.", items: ["REDSTONE:32", "REPEATER:8", "COMPARATOR:8", "PISTON:8", "STICKY_PISTON:4", "OBSERVER:8", "REDSTONE_TORCH:16"]}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aWool!", pool: ["WHITE_WOOL:32", "RED_WOOL:32", "BLUE_WOOL:32", "GREEN_WOOL:32", "YELLOW_WOOL:32", "PURPLE_WOOL:32", "ORANGE_WOOL:32", "CYAN_WOOL:32"], min: 1, max: 2}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aTerracotta!", pool: ["WHITE_TERRACOTTA:32", "ORANGE_TERRACOTTA:32", "BLUE_TERRACOTTA:32", "RED_TERRACOTTA:32", "LIME_TERRACOTTA:32", "PURPLE_TERRACOTTA:32"], min: 1, max: 2}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aDyes!", pool: ["RED_DYE:32", "BLUE_DYE:32", "GREEN_DYE:32", "YELLOW_DYE:32", "PURPLE_DYE:32", "CYAN_DYE:32", "MAGENTA_DYE:32"], min: 1, max: 2}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Valuables and fireworks!", items: ["IRON_INGOT:16", "GOLD_INGOT:16", "DIAMOND:8", "EMERALD:8", "LAPIS_LAZULI:16", "FIREWORK_ROCKET:20"]}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aQuartz package.", items: ["QUARTZ_BLOCK:16", "CHISELED_QUARTZ_BLOCK:8", "QUARTZ_PILLAR:8", "QUARTZ_STAIRS:8", "QUARTZ_SLAB:8"]}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aFishing kit.", items: ["FISHING_ROD"], pool: ["COD:4", "SALMON:4", "TROPICAL_FISH:2", "PUFFERFISH:2"], min: 2, max: 4}
+
+  # ============================ SPECIAL JOKE ITEMS ============================
+  - {type: ITEM, category: BAD, weight: 3, message: "&c...Only Hope.", items: ["BROWN_MUSHROOM"], name: "&7Only Hope"}
+  - {type: ITEM, category: BAD, weight: 3, message: "&7You're wasting your time.", items: ["CLOCK"], name: "&7You're wasting your time"}
+  - {type: ITEM, category: BAD, weight: 3, message: "&eI'm funny.", items: ["TROPICAL_FISH"], name: "&eI'm funny"}
+  - {type: ITEM, category: BAD, weight: 3, message: "&eOooooh!", items: ["PUFFERFISH"], name: "&eOooooh!"}
+  - {type: ITEM, category: NEUTRAL, weight: 4, message: "&7All the flowers!", items: ["POPPY:16", "DANDELION:16", "BLUE_ORCHID:8", "ALLIUM:8", "AZURE_BLUET:8", "OXEYE_DAISY:8"]}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aEnchanted books!", pool: ["BOOK"], min: 7, max: 10, randomEnchantments: true, enchantCount: 2, enchantMaxLevel: 3}
+  - {type: ITEM, category: GOOD, weight: 4, message: "&aPrismarine package.", items: ["PRISMARINE:16", "PRISMARINE_BRICKS:16", "DARK_PRISMARINE:16", "SEA_LANTERN:4", "PRISMARINE_CRYSTALS:8", "PRISMARINE_SHARD:8"]}
+
+  # ============================ PASSIVE MOBS ============================
+  - {type: MOB, category: NEUTRAL, weight: 4, message: "&aLucky Pig!", mob: PIG, name: "&aLucky Pig"}
+  - {type: MOB, category: NEUTRAL, weight: 4, message: "&aLucky Cow!", mob: COW, name: "&aLucky Cow"}
+  - {type: MOB, category: NEUTRAL, weight: 4, message: "&aLucky Chicken!", mob: CHICKEN, name: "&aLucky Chicken"}
+  - {type: MOB, category: NEUTRAL, weight: 4, message: "&aLucky Sheep!", mob: SHEEP, name: "&aLucky Sheep"}
+  - {type: MOB, category: NEUTRAL, weight: 4, message: "&aLucky Rabbit!", mob: RABBIT, name: "&aLucky Rabbit"}
+  - {type: MOB, category: BAD, weight: 3, message: "&7An unlucky squid.", mob: SQUID, name: "&7Unlucky Squid"}
+  - {type: SPECIAL, category: GOOD, weight: 3, message: "&dMr. Rainbow and friends!", special: RAINBOW_SHEEP, value: 16}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aEggs and diamonds, launched!", items: ["EGG:40", "DIAMOND:20"], launch: true}
+  - {type: ITEM, category: GOOD, weight: 3, message: "&aBottles o' Enchanting!", items: ["EXPERIENCE_BOTTLE:24"], launch: true}
+  - {type: SPECIAL, category: BAD, weight: 3, message: "&4TNT everywhere!", special: TNT_AIR_LAUNCH, value: 15}
+
+  # ============================ HOSTILE MOBS ============================
+  - {type: MOB, category: BAD, weight: 4, message: "&cCharged creeper!", mob: CREEPER, charged: true}
+  - {type: MOB, category: BAD, weight: 1, message: "&4A GIANT!", mob: GIANT}
+  - {type: MOB, category: BAD, weight: 1, message: "&4The Wither!", mob: WITHER}
+  - {type: MOB, category: BAD, weight: 2, message: "&cA Ghast!", mob: GHAST}
+  - {type: MOB, category: BAD, weight: 1, message: "&4An Elder Guardian!", mob: ELDER_GUARDIAN}
+  - {type: MOB, category: BAD, weight: 3, message: "&cKiller Rabbit!", mob: RABBIT, rabbitType: THE_KILLER_BUNNY}
+  - {type: MOB, category: BAD, weight: 3, message: "&cBob is here.", mob: ZOMBIE, name: "&cBob", equipment: {helmet: IRON_HELMET, chest: IRON_CHESTPLATE, legs: IRON_LEGGINGS, boots: IRON_BOOTS, hand: IRON_SWORD}}
+  - {type: MOB, category: BAD, weight: 3, message: "&7The Ghostly Horseman!", mob: SKELETON, name: "&7Ghostly Horseman", equipment: {helmet: IRON_HELMET, hand: IRON_SWORD}}
+
+  # ============================ WEIRD MOB EVENTS ============================
+  - {type: SPECIAL, category: NEUTRAL, weight: 3, message: "&7A villager on a tower of pigs!", special: MOB_STACK}
+  - {type: MOB, category: GOOD, weight: 3, message: "&aHorses!", mob: HORSE, min: 8, max: 12}
+  - {type: SPECIAL, category: BAD, weight: 2, message: "&cA witch and too many bats!", special: WITCH_BATS}
+  - {type: MOB, category: BAD, weight: 2, message: "&4A giant slime!", mob: SLIME, size: 10}
+  - {type: MOB, category: BAD, weight: 2, message: "&4A giant magma cube!", mob: MAGMA_CUBE, size: 10}
+  - {type: MOB, category: GOOD, weight: 3, message: "&aLoyal wolves!", mob: WOLF, min: 5, max: 10, tamed: true, collar: RED}
+  - {type: MOB, category: GOOD, weight: 3, message: "&aTamed cats!", mob: CAT, min: 5, max: 10, tamed: true}
+  - {type: MOB, category: GOOD, weight: 3, message: "&aBunnies!", mob: RABBIT, min: 5, max: 10}
+
+  # ============================ HERO VILLAGERS ============================
+  - {type: SPECIAL, category: GOOD, weight: 2, message: "&aA hero weapon smith!", special: HERO_VILLAGER, preset: WEAPONS}
+  - {type: SPECIAL, category: GOOD, weight: 2, message: "&aA hero armor smith!", special: HERO_VILLAGER, preset: ARMOR}
+  - {type: SPECIAL, category: GOOD, weight: 2, message: "&aA hero tool smith!", special: HERO_VILLAGER, preset: TOOLS}
+
+  # ============================ FALLING BLOCK EVENTS ============================
+  - {type: FALLING, category: NEUTRAL, weight: 4, message: "&7A falling iron block.", fallingMaterial: IRON_BLOCK}
+  - {type: FALLING, category: NEUTRAL, weight: 4, message: "&7A falling gold block.", fallingMaterial: GOLD_BLOCK}
+  - {type: FALLING, category: NEUTRAL, weight: 4, message: "&7A falling emerald block.", fallingMaterial: EMERALD_BLOCK}
+  - {type: FALLING, category: NEUTRAL, weight: 4, message: "&7A falling lapis block.", fallingMaterial: LAPIS_BLOCK}
+  - {type: FALLING, category: GOOD, weight: 3, message: "&aFalling diamond block!", fallingMaterial: DIAMOND_BLOCK, lightning: true}
+  - {type: FALLING, category: GOOD, weight: 2, message: "&6A giant terracotta pole!", fallingMaterial: WHITE_TERRACOTTA, topMaterial: DIAMOND_BLOCK, count: 51, height: 40, lightning: true}
+  - {type: SPECIAL, category: GOOD, weight: 2, message: "&6Redstone + TNT tower!", special: TNT_TOWER}
+  - {type: SPECIAL, category: NEUTRAL, weight: 3, message: "&7...Baby you?", special: ARMOR_STAND_BABY}
+
+  # ============================ MONSTER APOCALYPSE ============================
+  - {type: APOCALYPSE, category: BAD, weight: 2, message: "&4Apocalypse: Zombies!", groups: [{mob: ZOMBIE, min: 20, max: 50}]}
+  - {type: APOCALYPSE, category: BAD, weight: 2, message: "&4Apocalypse: Creepers!", groups: [{mob: CREEPER, min: 10, max: 30}]}
+  - {type: APOCALYPSE, category: BAD, weight: 2, message: "&4Apocalypse: Spiders!", groups: [{mob: SPIDER, min: 15, max: 45}, {mob: CAVE_SPIDER, min: 5, max: 10}]}
+  - {type: APOCALYPSE, category: BAD, weight: 2, message: "&4Apocalypse: Silverfish!", groups: [{mob: SILVERFISH, min: 15, max: 45}, {mob: ENDERMITE, min: 5, max: 10}]}
+  - {type: APOCALYPSE, category: BAD, weight: 2, message: "&4Apocalypse: Guardians!", groups: [{mob: GUARDIAN, min: 10, max: 30}]}
+  - {type: APOCALYPSE, category: BAD, weight: 1, message: "&4THE APOCALYPSE!", groups: [{mob: ZOMBIE, min: 20, max: 50}, {mob: CREEPER, min: 10, max: 30}, {mob: SPIDER, min: 15, max: 45}, {mob: SILVERFISH, min: 15, max: 45}, {mob: GUARDIAN, min: 10, max: 30}]}
+
+  # ============================ TRAPS / STRUCTURES ============================
+  - {type: TRAP, category: BAD, weight: 4, message: "&4Look up!", trap: ANVIL, target: PLAYER}
+  - {type: TRAP, category: BAD, weight: 3, message: "&4Hot floor!", trap: LAVA, target: PLAYER}
+  - {type: TRAP, category: BAD, weight: 3, message: "&cSoaked!", trap: WATER, target: PLAYER}
+  - {type: TRAP, category: BAD, weight: 4, message: "&4A gift of TNT!", trap: TNT, value: 60}
+  - {type: TRAP, category: BAD, weight: 3, message: "&4Arrow rain!", trap: ARROW_RAIN, target: PLAYER, value: 24}
+  - {type: TRAP, category: BAD, weight: 3, message: "&cSticky situation.", trap: WEB, target: PLAYER}
+  - {type: TRAP, category: BAD, weight: 2, message: "&4BOOM!", trap: EXPLOSION, power: 6.0, breakBlocks: false}
+  - {type: STRUCTURE, category: BAD, weight: 4, message: "&cYou're trapped!", structure: CAGE, target: PLAYER, material: IRON_BARS}
+  - {type: SPECIAL, category: BAD, weight: 1, message: "&4Well, there's your problem.", special: BEDROCK_SIGN}
+  - {type: SPECIAL, category: NEUTRAL, weight: 3, message: "&7One is Lucky. One is not.", special: TWO_BLOCKS}
+  - {type: SPECIAL, category: GOOD, weight: 2, message: "&aA bouncing castle!", special: SLIME_CASTLE}
+
+  # ============================ HERO / SPECIAL ITEMS ============================
+  - {type: ITEM, category: NEUTRAL, weight: 2, message: "&7Hero's Block Book.", items: ["BOOK"], name: "&6Hero's Block Book"}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Hero's Sword!", items: ["DIAMOND_SWORD"], name: "&6Hero's Sword", randomEnchantments: true, enchantCount: 5, enchantMaxLevel: 5}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Hero's Bow!", items: ["BOW"], name: "&6Hero's Bow", randomEnchantments: true, enchantCount: 4, enchantMaxLevel: 5}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Hero's Fishing Rod!", items: ["FISHING_ROD"], name: "&6Hero's Fishing Rod", randomEnchantments: true, enchantCount: 4, enchantMaxLevel: 5}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Hero tools!", pool: ["DIAMOND_PICKAXE", "DIAMOND_AXE", "DIAMOND_SHOVEL", "DIAMOND_HOE"], min: 1, max: 2, randomEnchantments: true, enchantCount: 4, enchantMaxLevel: 5}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Hero armor!", pool: ["DIAMOND_HELMET", "DIAMOND_CHESTPLATE", "DIAMOND_LEGGINGS", "DIAMOND_BOOTS"], min: 1, max: 2, randomEnchantments: true, enchantCount: 4, enchantMaxLevel: 5}
+
+  # ============================ LUCKY EQUIPMENT ============================
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6The Lucky Sword!", items: ["DIAMOND_SWORD"], name: "&6Lucky Sword", randomEnchantments: true, enchantCount: 6, enchantMaxLevel: 5}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6The Lucky Bow!", items: ["BOW"], name: "&6Lucky Bow", randomEnchantments: true, enchantCount: 6, enchantMaxLevel: 5}
+  - {type: ITEM, category: GOOD, weight: 2, message: "&6Lucky kit!", items: ["DIAMOND_SWORD", "BOW", "FIREWORK_ROCKET:20"], name: "&6Lucky Gear", randomEnchantments: true, enchantCount: 6, enchantMaxLevel: 5}
+
+  # ============================ CLASSIC GENERIC OUTCOMES ============================
+  - {type: ITEM, category: GOOD, weight: 8, message: "&aJackpot! Diamonds.", items: ["DIAMOND:16"]}
+  - {type: ITEM, category: GOOD, weight: 6, message: "&aEmeralds!", items: ["EMERALD_BLOCK:1"]}
+  - {type: ITEM, category: NEUTRAL, weight: 8, message: "&7Some food.", items: ["COOKED_BEEF:8", "BREAD:4"]}
+  - {type: ITEM, category: BAD, weight: 8, message: "&cJunk.", items: ["ROTTEN_FLESH:3", "STICK:5", "FLINT:2"]}
+  - {type: MOB, category: BAD, weight: 7, message: "&cThe undead!", mob: ZOMBIE, min: 2, max: 4}
+  - {type: EFFECT, category: GOOD, weight: 7, message: "&bSpeed!", effect: speed, duration: 30, amplifier: 1}
+  - {type: EFFECT, category: BAD, weight: 7, message: "&cSlowed.", effect: slowness, duration: 20, amplifier: 1}
+  - {type: ACTION, category: GOOD, weight: 5, message: "&aFull heal!", action: HEAL}
+  - {type: ACTION, category: GOOD, weight: 5, message: "&aExperience!", action: XP, value: 40}
+  - {type: ACTION, category: BAD, weight: 5, message: "&cUp you go!", action: LAUNCH, value: 2.5}
+  - {type: ACTION, category: NEUTRAL, weight: 4, message: "&7The skies clear.", action: WEATHER_CLEAR}

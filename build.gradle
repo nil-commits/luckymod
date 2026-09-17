@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.nilcommits'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+}
+
+java {
+    // Minecraft 26.2 / Paper requires Java 25 to build against its API
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:26.2.build.123-stable'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    // 26.2's API is compiled for Java 25, so target 25
+    options.release = 25
+}
+
+processResources {
+    filesMatching('plugin.yml') {
+        expand(version: project.version)
+    }
+}
+
+jar {
+    archiveBaseName = 'Luckymod'
+    destinationDirectory = file("$rootDir/target")
+}
